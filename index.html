@@ -1,0 +1,538 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixi Linux</title>
+  <link rel="icon" type="image/x-icon" href="./image/fse.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    @font-face {
+      font-family: 'Rustic Roadway Local';
+      src: url('font/RusticRoadway.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    :root {
+      --red: #e74c3c;
+      --red-dark: #2c0a0a;
+      --bg-gradient: linear-gradient(135deg, #0f0a0a 0%, #1e0e0e 60%, #0a0a0a 100%);
+      --glass-bg: rgba(30, 14, 14, 0.5);
+      --glass-border: rgba(255,255,255,0.08);
+      --text: #f1f1f1;
+      --text-muted: #d1b8b8;
+      --accent: #e74c3c;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      width: 100%;
+      font-family: 'Urbanist', sans-serif;
+      background: #000;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    header {
+      padding-top: 4rem;
+      padding-bottom: 2rem;
+      text-align: center;
+    }
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+    .main-title .accent {
+      color: var(--accent);
+    }
+    .subtitle {
+      font-family: 'Rustic Roadway Local', cursive;
+      font-size: 2rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      color: #fff;
+    }
+    .glass-box {
+      background: #000;
+      border: 1.5px solid var(--accent);
+      border-radius: 22px;
+      box-shadow: 0 0 0 0 rgba(231,76,60,0.0), 0 0 24px 0 rgba(231,76,60,0.18);
+      backdrop-filter: blur(0px);
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      transition: box-shadow 0.4s cubic-bezier(.4,2,.3,1), border 0.3s, transform 0.3s;
+      overflow: hidden;
+    }
+    .glass-box::before {
+      display: none;
+    }
+    .glass-box:hover {
+      box-shadow: 0 0 32px 8px rgba(231,76,60,0.35), 0 4px 32px rgba(231,76,60,0.18);
+      border: 1.5px solid var(--accent);
+      transform: translateY(-4px) scale(1.025);
+    }
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .feature {
+      flex: 1 1 220px;
+      min-width: 200px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      color: var(--text);
+      box-shadow: 0 4px 16px rgba(30,14,14,0.08);
+    }
+    .feature strong {
+      color: var(--accent);
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .screenshot-section {
+      width: 100%;
+      max-width: 1200px;
+      display:block;
+      margin:0 auto;
+      align-items: center;
+    }
+    .screenshot-img {
+      width: 100%;
+      height: auto;
+      border-radius: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      display: block;
+      margin:0 auto;
+    }
+    .download-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .nav-btn, .cta-btn, .download-btn {
+      background: #fff;
+      color: #000;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 12px rgba(231,76,60,0.10);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      border-radius: 14px;
+      padding: 1.1rem 2.7rem;
+      transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .nav-btn:hover, .cta-btn:hover, .download-btn:hover {
+      background: #fff;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 16px 2px rgba(231,76,60,0.25);
+      transform: translateY(-2px) scale(1.05);
+    }
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1rem;
+      padding: 2rem 0 1rem 0;
+      margin-top: 2rem;
+    }
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-out;
+    }
+    .animate-on-scroll.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (max-width: 700px) {
+      .main-title { font-size: 2.1rem; }
+      .subtitle { font-size: 1.2rem; }
+      .glass-box { padding: 1.2rem 0.7rem; }
+      .features { flex-direction: column; gap: 1.2rem; }
+      .screenshot-img { max-width: 100%; }
+    }
+    .navbar {
+      position: fixed;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90vw;
+      max-width: 1200px;
+      background: #000;
+      border-radius: 22px;
+      box-shadow: 0 4px 16px 0 rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 2.5rem;
+      z-index: 1000;
+      min-height: 56px;
+      border: 4px solid #000;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #fff;
+      object-fit: cover;
+    }
+    .nav-brand {
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-center li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.08rem;
+      transition: color 0.2s;
+      padding: 0.2rem 0.7rem;
+    }
+    .nav-center li a:hover {
+      color: var(--accent);
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .icon-btn {
+      background: none;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 0.35rem 0.6rem;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: border 0.2s, background 0.2s;
+    }
+    .icon-btn:hover {
+      border: 1.5px solid var(--accent);
+      background: #181818;
+    }
+    .download-btn {
+      background: #fff;
+      color: #000;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.08rem;
+      padding: 0.6rem 1.5rem 0.6rem 1.1rem;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      border: none;
+      box-shadow: 0 2px 12px rgba(231,76,60,0.10);
+      margin-left: 0.5rem;
+      transition: box-shadow 0.2s, color 0.2s, background 0.2s;
+    }
+    .download-btn:hover {
+      color: var(--accent);
+      box-shadow: 0 0 16px 2px rgba(231,76,60,0.25);
+    }
+    @media (max-width: 900px) {
+      .navbar { flex-wrap: wrap; padding: 0.5rem 1rem; }
+      .nav-center { gap: 1.1rem; }
+      .download-btn { font-size: 1rem; padding: 0.5rem 1rem 0.5rem 0.8rem; }
+      .nav-brand { font-size: 1.1rem; }
+    }
+    @media (max-width: 600px) {
+      .navbar { flex-direction: column; align-items: stretch; min-height: unset; }
+      .nav-center { justify-content: center; flex-wrap: wrap; }
+      .nav-left, .nav-right { justify-content: center; }
+      .nav-logo { width: 26px; height: 26px; }
+    }
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 3rem 2rem;
+    }
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1.2rem;
+      letter-spacing: 1px;
+    }
+    .hero-subtitle {
+      font-size: 1.35rem;
+      color: var(--text-muted);
+      margin-bottom: 2.2rem;
+      max-width: 600px;
+    }
+    .stats-section {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin: 2.5rem 0 2.5rem 0;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      min-width: 180px;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px rgba(231,76,60,0.08);
+    }
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    .features-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 2.5rem 0 2.5rem 0;
+    }
+    .feature-card {
+      flex: 1 1 220px;
+      min-width: 220px;
+      max-width: 320px;
+      text-align: left;
+      padding: 2rem 1.5rem;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px rgba(231,76,60,0.08);
+    }
+    .feature-card h3 {
+      color: var(--accent);
+      font-size: 1.3rem;
+      margin-bottom: 0.7rem;
+    }
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .screenshot-section {
+      display: flex;
+      justify-content: center;
+      margin: 3rem 0 2.5rem 0;
+    }
+    .screenshot-glass {
+      padding: 0.7rem;
+      border-radius: 2.2rem;
+      background: rgba(231,76,60,0.07);
+      box-shadow: 0 4px 24px rgba(231,76,60,0.10);
+      max-width: 900px;
+      width: 100%;
+    }
+    .screenshot-img {
+      width: 100%;
+      height: auto;
+      border-radius: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      display: block;
+    }
+    .download-section {
+      margin: 3rem auto 2.5rem auto;
+      max-width: 500px;
+      text-align: center;
+    }
+    .download-btn {
+      background: var(--accent);
+      color: #fff;
+      padding: 1.1rem 2.7rem;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(231,76,60,0.18);
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+      margin-top: 1.2rem;
+    }
+    .download-btn:hover {
+      background: #c0392b;
+      transform: translateY(-2px) scale(1.05);
+    }
+    .testimonials-section {
+      display: none !important;
+    }
+    /* Animation keyframes */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 0 0 rgba(231,76,60,0.18); }
+      50% { box-shadow: 0 0 24px 8px rgba(231,76,60,0.22); }
+      100% { box-shadow: 0 0 0 0 rgba(231,76,60,0.18); }
+    }
+    /* Animation classes */
+    .animated-fadeInUp { animation: fadeInUp 0.8s cubic-bezier(.4,2,.3,1) both; }
+    .animated-fadeIn { animation: fadeIn 1s cubic-bezier(.4,2,.3,1) both; }
+    .animated-glowPulse { animation: glowPulse 2.5s infinite cubic-bezier(.4,2,.3,1); }
+    /* Apply animation to main sections and cards */
+    .trusted-by, .stats-section, .features-section, .screenshot-section, .download-section, .testimonials-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+    .trusted-by.visible, .stats-section.visible, .features-section.visible, .screenshot-section.visible, .download-section.visible, .testimonials-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeInUp 0.8s cubic-bezier(.4,2,.3,1);
+    }
+    .glass-box.animated-glowPulse {
+      animation: glowPulse 2.5s infinite cubic-bezier(.4,2,.3,1);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="image/logo.jpg" alt="Logo" class="nav-logo">
+      <span class="nav-brand">PIXI LINUX</span>
+    </div>
+    <ul class="nav-center">
+      <li><a href="#home">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="install.html">How to Install</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#download" class="download-btn">Download</a>
+    </div>
+  </nav>
+  <main>
+    <section class="hero">
+      <h1 class="hero-title">Bigger, Bolder, and <span class="accent">Better</span></h1>
+      <p class="hero-subtitle">Pixi Linux is a modern, fast, and beautiful Arch-based Linux distribution built for power users and creators.</p>
+      <a href="#download" class="cta-btn">Download Now</a>
+    </section>
+    <section class="stats-section">
+      <div class="stat-card glass-box">
+        <div class="stat-value">95%</div>
+        <div class="stat-label">User Satisfaction</div>
+      </div>
+      <div class="stat-card glass-box">
+        <div class="stat-value">125+</div>
+        <div class="stat-label">Contributors</div>
+      </div>
+      <div class="stat-card glass-box">
+        <div class="stat-value">∞</div>
+        <div class="stat-label">Rolling Updates</div>
+      </div>
+    </section>
+    <section class="features-section">
+      <div class="feature-card glass-box">
+        <h3>Lightning Fast</h3>
+        <p>Boots in seconds and runs smoothly on modern hardware.</p>
+      </div>
+      <div class="feature-card glass-box">
+        <h3>Beautiful UI</h3>
+        <p>Designed with a bold, minimal, and stylish red-accented interface.</p>
+      </div>
+      <div class="feature-card glass-box">
+        <h3>Easy Installer</h3>
+        <p>Get started quickly with a user-friendly graphical installer.</p>
+      </div>
+      <div class="feature-card glass-box">
+        <h3>Arch-Based</h3>
+        <p>Enjoy the power and flexibility of Arch Linux with extra polish.</p>
+      </div>
+    </section>
+    <section class="screenshot-section">
+      <div class="screenshot-glass glass-box">
+        <img src="./image/Screenshot (6).png" alt="Pixi Linux Screenshot" class="screenshot-img">
+      </div>
+    </section>
+    <section class="download-section glass-box" id="download">
+      <h2 style="margin-top:0; color:var(--accent); font-size:2rem;">Download</h2>
+      <p style="font-size:1.1rem; color:var(--text-muted);">Pixi Linux 1.0 - 64bit ISO</p>
+      <a href="https://example.com/pixi-os.iso" class="download-btn">Download ISO</a>
+      <div style="margin-top:1.2rem; color:var(--text-muted); font-size:0.95rem;">To install: Download the ISO file, flash it to a USB drive, then boot and start the installation process.</div>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 Pixi Linux. All rights reserved.
+  </footer>
+  <script>
+    function typeText(element, text, speed, callback) {
+      let i = 0;
+      function typing() {
+        if (i <= text.length) {
+          element.textContent = text.slice(0, i);
+          i++;
+          setTimeout(typing, speed);
+        } else if (callback) {
+          callback();
+        }
+      }
+      typing();
+    }
+    window.addEventListener('DOMContentLoaded', function() {
+      const title = document.getElementById('typing-title');
+      const subtitle = document.getElementById('typing-subtitle');
+      const overlay = document.getElementById('intro-overlay');
+      const mainContent = document.getElementById('main-content');
+      typeText(title, 'Pixi OS', 120, () => {
+        typeText(subtitle, 'Minimal. Arch-Based. Stylish.', 50, () => {
+          setTimeout(() => {
+            overlay.style.transition = 'opacity 0.7s';
+            overlay.style.opacity = 0;
+            mainContent.style.opacity = 1;
+            setTimeout(() => {
+              overlay.style.display = 'none';
+            }, 900);
+          }, 700);
+        });
+      });
+    });
+    // Intersection Observer for section animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.trusted-by, .stats-section, .features-section, .screenshot-section, .download-section, .testimonials-section').forEach(el => observer.observe(el));
+    // Add glow pulse to all glass boxes
+    setTimeout(() => {
+      document.querySelectorAll('.glass-box').forEach(box => box.classList.add('animated-glowPulse'));
+    }, 500);
+  </script>
+</body>
+</html>

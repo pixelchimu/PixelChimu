@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Pixi OS</title>
+  <link rel="icon" type="image/x-icon" href="./image/fse.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    @font-face {
+      font-family: 'Rustic Roadway Local';
+      src: url('font/RusticRoadway.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    :root {
+      --red: #e74c3c;
+      --red-dark: #2c0a0a;
+      --bg-gradient: linear-gradient(135deg, #0f0a0a 0%, #1e0e0e 60%, #0a0a0a 100%);
+      --glass-bg: rgba(30, 14, 14, 0.5);
+      --glass-border: rgba(255,255,255,0.08);
+      --text: #f1f1f1;
+      --text-muted: #d1b8b8; 
+      --accent: #e74c3c;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      width: 100%;
+      font-family: 'Urbanist', sans-serif;
+      background: #000;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .navbar {
+      position: fixed;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90vw;
+      max-width: 1200px;
+      background: #000;
+      border-radius: 22px;
+      box-shadow: 0 4px 16px 0 rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 2.5rem;
+      z-index: 1000;
+      min-height: 56px;
+      border: 4px solid #000;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #fff;
+      object-fit: cover;
+    }
+    .nav-brand {
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-center li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.08rem;
+      transition: color 0.2s;
+      padding: 0.2rem 0.7rem;
+    }
+    .nav-center li a:hover {
+      color: var(--accent);
+    }
+    .nav-center li a.active {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .download-btn {
+      background: #fff;
+      color: #000;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.08rem;
+      padding: 0.6rem 1.5rem 0.6rem 1.1rem;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      border: none;
+      box-shadow: 0 2px 12px rgba(231,76,60,0.10);
+      margin-left: 0.5rem;
+      transition: box-shadow 0.2s, color 0.2s, background 0.2s;
+    }
+    .download-btn:hover {
+      color: var(--accent);
+      box-shadow: 0 0 16px 2px rgba(231,76,60,0.25);
+    }
+    .hero {
+      min-height: 40vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 3rem 2rem;
+    }
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1.2rem;
+      letter-spacing: 1px;
+    }
+    .hero-subtitle {
+      font-size: 1.35rem;
+      color: var(--text-muted);
+      margin-bottom: 2.2rem;
+      max-width: 600px;
+    }
+    .about-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .glass-box {
+      background: #000;
+      border: 1.5px solid var(--accent);
+      border-radius: 22px;
+      box-shadow: 0 0 0 0 rgba(231,76,60,0.0), 0 0 24px 0 rgba(231,76,60,0.18);
+      backdrop-filter: blur(0px);
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      transition: box-shadow 0.4s cubic-bezier(.4,2,.3,1), border 0.3s, transform 0.3s;
+      overflow: hidden;
+    }
+    .glass-box:hover {
+      box-shadow: 0 0 32px 8px rgba(231,76,60,0.35), 0 4px 32px rgba(231,76,60,0.18);
+      border: 1.5px solid var(--accent);
+      transform: translateY(-4px) scale(1.025);
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .about-content {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      text-align: justify;
+    }
+    .about-content p {
+      margin-bottom: 1.5rem;
+    }
+    .channel-info {
+      background: rgba(231,76,60,0.1);
+      border: 1px solid var(--accent);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+    .channel-name {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .channel-description {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+    .youtube-btn {
+      display: inline-block;
+      background: #ff0000;
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(255,0,0,0.3);
+    }
+    .youtube-btn:hover {
+      background: #cc0000;
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 25px rgba(255,0,0,0.4);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .feature-item {
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .feature-icon {
+      font-size: 3rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .feature-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .back-btn {
+      display: inline-block;
+      margin: 2rem 0;
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .back-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1rem;
+      padding: 2rem 0 1rem 0;
+      margin-top: 2rem;
+    }
+    @media (max-width: 900px) {
+      .navbar { flex-wrap: wrap; padding: 0.5rem 1rem; }
+      .nav-center { gap: 1.1rem; }
+      .download-btn { font-size: 1rem; padding: 0.5rem 1rem 0.5rem 0.8rem; }
+      .nav-brand { font-size: 1.1rem; }
+    }
+    @media (max-width: 600px) {
+      .navbar { flex-direction: column; align-items: stretch; min-height: unset; }
+      .nav-center { justify-content: center; flex-wrap: wrap; }
+      .nav-left, .nav-right { justify-content: center; }
+      .nav-logo { width: 26px; height: 26px; }
+      .hero-title { font-size: 2.5rem; }
+      .about-section { padding: 0 1rem; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="image/logo.jpg" alt="Logo" class="nav-logo">
+      <span class="nav-brand">PIXI LINUX</span>
+    </div>
+    <ul class="nav-center">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="install.html">How to Install</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="index.html#download" class="download-btn">Download</a>
+    </div>
+  </nav>
+  
+  <main>
+    <section class="hero">
+      <h1 class="hero-title">About <span class="accent">Us</span></h1>
+      <p class="hero-subtitle">Learn more about the team behind Pixi Linux and our YouTube channel, PixelChimu</p>
+    </section>
+    
+    <section class="about-section">
+      <div class="glass-box">
+        <h2 class="section-title">Our Story</h2>
+        <div class="about-content">
+<p> PixelChimu is a passionate YouTube channel handeled by creative and caring people aiming to provide YOU dear viewers with content worthy of your time and precious eyes.  </p>
+          <p>We are committed to delivering a glorious exeprience in the tech world and also a cutting-edge Arch-based distribution that combines the best of both worlds - the stability and package management of Arch Linux with our own unique design and user experience improvements.</p>
+        </div>
+      </div>
+      
+      <div class="glass-box">
+        <div class="channel-info">
+          <h3 class="channel-name">🎥 PixelChimu YouTube Channel</h3>
+          <p class="channel-description">
+            Follow our development journey, tutorials, and intertaining content on our YouTube channel!
+          </p>
+          <a href="https://youtube.com/@pixelchimu" target="_blank" class="youtube-btn">
+            Subscribe to PixelChimu 👾
+          </a>
+        </div>
+        
+        <div class="about-content">
+          <p>Our YouTube channel <strong>PixelChimu</strong> is where we share our passion for content creating, and technology Through our videos, we aim to:</p>
+          
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">🎓</div>
+              <h4 class="feature-title">Educational Content</h4>
+              <p class="feature-desc">Comprehensive tutorials and guides for any aspects </p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🚀</div>
+              <h4 class="feature-title">Development Updates</h4>
+              <p class="feature-desc">Behind-the-scenes look at PixelChimu and all the work being put</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">💻</div>
+              <h4 class="feature-title">Tech Reviews</h4>
+              <p class="feature-desc">Reviews of software, hardware, and any intresting tech</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🎯</div>
+              <h4 class="feature-title">Community Building</h4>
+              <p class="feature-desc">Building a supportive community of Lovely & passionate people</p>
+            </div>
+          </div>
+          
+          <p>Regardless of your age and nationality , our channel provides valuable content that will help you on your journey. We regularly upload videos covering customization tips, software recommendations, fun and entertaining videos and much more.</p>
+          
+          <p>Make sure to <strong>subscribe</strong> to stay updated with our latest videos and be part of our growing community!</p>
+        </div>
+      </div>
+      
+      <div class="glass-box">
+        <h2 class="section-title">Our Mission</h2>
+        <div class="about-content">
+          <p>At PixelChimu, we believe that technology should be both powerful and fun to learn. Our mission is to create a comunity where there is:</p>
+          
+          <ul style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">
+            <li><strong>Mutual learning:</strong> Where both us as creators and you as viewrs constantly learn from each other.</li>
+            <li><strong>respect & love:</strong> Regardless of anything , anyone deservs respect and love.</li>
+            <li><strong>constant growth:</strong> Both as creators buildeing their dream comunity and as viewers provided with good content.</li>
+          </ul>
+          
+          <p>We're constantly working to improve PixelChimu based on community feedback and our own vision for what a fun tech YouTube channel should be. Every video, every idea, and every project is made with our users in mind.</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center;">
+        <a href="index.html" class="back-btn">← Back to Homepage</a>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    &copy; 2025 Pixi Linux. All rights reserved.
+  </footer>
+</body>
+</html>
