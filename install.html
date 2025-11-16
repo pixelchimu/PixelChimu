@@ -361,7 +361,6 @@
             <li>Restart your computer</li>
             <li>Press the BIOS/UEFI key (usually F2, F12, Delete, or Esc) during startup</li>
             <li>Select your USB drive from the boot menu</li>
-            <li>Choose "Pixi Linux" from the GRUB menu</li>
           </ul>
         </div>
       </div>
@@ -370,11 +369,13 @@
         <div class="step-number">4</div>
         <h3 class="step-title">Run the Installer</h3>
         <div class="step-content">
-          <p>Once you've booted into Pixi Linux, you'll see the desktop with the installer icon.</p>
+          <p>Once you've booted into your flash, you'll see the installer config.</p>
           <ul>
-            <li>Double-click on the "Install Pixi Linux" icon on the desktop</li>
-            <li>The installer will guide you through the installation process</li>
-            <li>Follow the on-screen instructions carefully</li>
+            <li>press "alt+ctrl+f2" to the enter partition menu </li>
+            <li>type "root" followed by lsblk and find your desired disk.</li>
+            <li>write "cfdisk" followed by "/dev/yourdiskname" and choose gpt</li>
+            <li>using your arrow keys , choose "new" and add your desired partitions</li>
+            <li>choose "writer" and then "quit" and finally press "alt+ctrl+f1"</li>
           </ul>
         </div>
       </div>
@@ -429,3 +430,4 @@
   </footer>
 </body>
 </html>
+
